@@ -14,7 +14,6 @@
     --surface: #FFFFFF;
     --surface2: #EFEFEB;
     --border: rgba(0,0,0,0.10);
-    --border-strong: rgba(0,0,0,0.18);
     --text: #1A1916;
     --text-muted: #6B6860;
     --text-faint: #9C9A93;
@@ -38,7 +37,6 @@
       --surface: #222218;
       --surface2: #2C2C22;
       --border: rgba(255,255,255,0.10);
-      --border-strong: rgba(255,255,255,0.18);
       --text: #F0EEE6;
       --text-muted: #9C9A8A;
       --text-faint: #6B6858;
@@ -55,13 +53,7 @@
     }
   }
 
-  body {
-    font-family: 'Syne', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 0;
-  }
+  body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
   .header {
     background: var(--surface);
@@ -69,334 +61,104 @@
     padding: 20px 32px;
     display: flex;
     align-items: baseline;
-    gap: 16px;
+    gap: 12px;
+    flex-wrap: wrap;
   }
-
-  .header-title {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-  }
-
-  .header-title span {
-    color: var(--accent);
-  }
-
-  .header-meta {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text-faint);
-    margin-left: auto;
-  }
+  .header-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+  .header-title span { color: var(--accent); }
+  .header-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); margin-left: auto; }
 
   .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 4px;
-    letter-spacing: 0.3px;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px;
   }
-  .badge-green { background: var(--accent-light); color: var(--accent); }
-  .badge-amber { background: var(--warn-light); color: var(--warn); }
-  .badge-red   { background: var(--danger-light); color: var(--danger); }
-  .badge-blue  { background: var(--info-light); color: var(--info); }
-  .badge-purple{ background: var(--purple-light); color: var(--purple); }
-  .badge-gray  { background: var(--surface2); color: var(--text-muted); }
+  .badge-green  { background: var(--accent-light); color: var(--accent); }
+  .badge-amber  { background: var(--warn-light);   color: var(--warn); }
+  .badge-red    { background: var(--danger-light); color: var(--danger); }
+  .badge-blue   { background: var(--info-light);   color: var(--info); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-gray   { background: var(--surface2);     color: var(--text-muted); }
 
   .main { padding: 28px 32px; max-width: 1100px; }
 
-  .kpi-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
-    margin-bottom: 28px;
-  }
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
 
-  .kpi {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-  }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+  .kpi-label { font-size: 11px; color: var(--text-faint); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .kpi-value { font-size: 28px; font-weight: 700; line-height: 1; letter-spacing: -1px; }
+  .kpi-value.green  { color: var(--accent); }
+  .kpi-value.amber  { color: var(--warn); }
+  .kpi-value.red    { color: var(--danger); }
+  .kpi-value.blue   { color: var(--info); }
+  .kpi-value.purple { color: var(--purple); }
+  .kpi-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
 
-  .kpi-label {
-    font-size: 11px;
-    color: var(--text-faint);
-    font-family: 'DM Mono', monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 8px;
-  }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
 
-  .kpi-value {
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .progress-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; position: relative; }
+  .progress-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+  .progress-target { position: absolute; top: 0; height: 100%; width: 2px; background: var(--text-faint); }
+  .progress-labels { display: flex; justify-content: space-between; margin-top: 6px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); }
 
-  .kpi-value.green { color: var(--accent); }
-  .kpi-value.amber { color: var(--warn); }
-  .kpi-value.red   { color: var(--danger); }
-  .kpi-value.blue  { color: var(--info); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
 
-  .kpi-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 6px;
-  }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+  .card-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--text); }
 
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text-faint);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
+  .domain-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .domain-row:last-child { border-bottom: none; }
+  .domain-prefix { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--text-muted); min-width: 44px; }
+  .domain-name { font-size: 13px; flex: 1; }
+  .score-bar-wrap { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 3px; }
+  .domain-count { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-faint); min-width: 32px; text-align: right; }
 
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
+  .alerts-list { display: flex; flex-direction: column; gap: 10px; }
+  .alert-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  .alert-item.danger { background: var(--danger-light); border-color: var(--danger); }
+  .alert-item.warn   { background: var(--warn-light);   border-color: var(--warn); }
+  .alert-item.info   { background: var(--info-light);   border-color: var(--info); }
+  .alert-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+  .danger .alert-dot { background: var(--danger); }
+  .warn   .alert-dot { background: var(--warn); }
+  .info   .alert-dot { background: var(--info); }
+  .alert-title { font-size: 13px; font-weight: 600; }
+  .danger .alert-title { color: var(--danger); }
+  .warn   .alert-title { color: var(--warn); }
+  .info   .alert-title { color: var(--info); }
+  .alert-body { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  .critical-list { display: flex; flex-direction: column; gap: 6px; }
+  .critical-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--surface2); border-radius: var(--radius-sm); }
+  .critical-id { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; min-width: 72px; }
+  .critical-title { font-size: 12px; color: var(--text-muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .critical-missing { font-size: 11px; color: var(--danger); font-family: 'DM Mono', monospace; }
+
+  .waves-wrap { display: flex; flex-direction: column; gap: 10px; }
+  .wave-item { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface2); border-radius: var(--radius-sm); }
+  .wave-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted); }
+  .wave-desc { font-size: 13px; }
+  .wave-domains { display: flex; flex-wrap: wrap; gap: 4px; }
+
+  .criteria-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 28px; }
+  .criteria-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+  .criteria-score { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
+  .criteria-name { font-size: 11px; color: var(--text-faint); line-height: 1.4; }
+
+  .update-line { display: flex; align-items: center; gap: 8px; padding: 10px 0; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-faint); font-family: 'DM Mono', monospace; }
+  .dot-live { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
   @media (max-width: 700px) {
     .grid-2 { grid-template-columns: 1fr; }
     .main { padding: 20px 16px; }
     .header { padding: 16px; }
-  }
-
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-  }
-
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    color: var(--text);
-  }
-
-  .domain-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .domain-row:last-child { border-bottom: none; }
-
-  .domain-prefix {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    min-width: 44px;
-  }
-
-  .domain-name {
-    font-size: 13px;
-    flex: 1;
-  }
-
-  .domain-count {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text-faint);
-    min-width: 28px;
-    text-align: right;
-  }
-
-  .score-bar-wrap {
-    flex: 1;
-    height: 6px;
-    background: var(--surface2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .score-bar {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.6s ease;
-  }
-
-  .alerts-list { display: flex; flex-direction: column; gap: 10px; }
-
-  .alert-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-  }
-  .alert-item.danger { background: var(--danger-light); border-color: var(--danger); }
-  .alert-item.warn   { background: var(--warn-light);   border-color: var(--warn); }
-  .alert-item.info   { background: var(--info-light);   border-color: var(--info); }
-
-  .alert-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    margin-top: 4px;
-    flex-shrink: 0;
-  }
-  .danger .alert-dot { background: var(--danger); }
-  .warn   .alert-dot { background: var(--warn); }
-  .info   .alert-dot { background: var(--info); }
-
-  .alert-title {
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .danger .alert-title { color: var(--danger); }
-  .warn   .alert-title { color: var(--warn); }
-  .info   .alert-title { color: var(--info); }
-
-  .alert-body {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
-  }
-
-  .waves-wrap { display: flex; flex-direction: column; gap: 10px; }
-
-  .wave-item {
-    display: grid;
-    grid-template-columns: 80px 1fr auto;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 14px;
-    background: var(--surface2);
-    border-radius: var(--radius-sm);
-  }
-
-  .wave-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .wave-desc { font-size: 13px; }
-
-  .wave-domains {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-
-  .progress-wrap {
-    margin-bottom: 28px;
-  }
-
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-  }
-
-  .progress-track {
-    height: 8px;
-    background: var(--surface2);
-    border-radius: 4px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .progress-fill {
-    height: 100%;
-    border-radius: 4px;
-    background: var(--accent);
-    transition: width 0.8s ease;
-  }
-
-  .progress-target {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 2px;
-    background: var(--text-faint);
-  }
-
-  .progress-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 6px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--text-faint);
-  }
-
-  .chart-wrap {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 28px;
-  }
-
-  .update-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 0;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
-    color: var(--text-faint);
-    font-family: 'DM Mono', monospace;
-  }
-
-  .dot-live {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .criteria-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    margin-bottom: 28px;
-  }
-
-  @media (max-width: 700px) {
     .criteria-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .criteria-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    text-align: center;
-  }
-
-  .criteria-score {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 4px;
-  }
-
-  .criteria-name {
-    font-size: 11px;
-    color: var(--text-faint);
-    line-height: 1.4;
+    .wave-item { grid-template-columns: 70px 1fr; }
+    .wave-domains { display: none; }
   }
 </style>
 </head>
@@ -404,7 +166,7 @@
 
 <div class="header">
   <div class="header-title">Delphi <span>·</span> Corpus</div>
-  <div class="header-meta">Dernière mise à jour : mai 2026 — v2 delphi_score.py</div>
+  <div class="header-meta">08 mai 2026 — delphi_score.py v2</div>
 </div>
 
 <div class="main">
@@ -412,39 +174,44 @@
   <div class="kpi-row">
     <div class="kpi">
       <div class="kpi-label">Score moyen</div>
-      <div class="kpi-value green">8.6<span style="font-size:16px;font-weight:400;color:var(--text-muted)">/10</span></div>
-      <div class="kpi-sub">+1.6 vs run précédent (parser compilé)</div>
+      <div class="kpi-value amber">7.8<span style="font-size:16px;font-weight:400;color:var(--text-muted)">/10</span></div>
+      <div class="kpi-sub">31 cartes scorées</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Cartes actives</div>
-      <div class="kpi-value blue">25</div>
-      <div class="kpi-sub">hors META (27 total)</div>
+      <div class="kpi-value blue">31</div>
+      <div class="kpi-sub">hors META / GLOS vides</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Objectif 12 mois</div>
-      <div class="kpi-value" style="color:var(--purple)">60</div>
+      <div class="kpi-value purple">60</div>
       <div class="kpi-sub">cible utilité quotidienne</div>
     </div>
     <div class="kpi">
       <div class="kpi-label">Cartes critiques</div>
-      <div class="kpi-value amber">1</div>
-      <div class="kpi-sub">FORM-10 à 4/10</div>
+      <div class="kpi-value red">7</div>
+      <div class="kpi-sub">score ≤ 4/10</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Sans validation terrain</div>
-      <div class="kpi-value red">18</div>
-      <div class="kpi-sub">sur 25 — via NB-ADO</div>
+      <div class="kpi-label">Caveats ouverts</div>
+      <div class="kpi-value amber">21</div>
+      <div class="kpi-sub">sur 31 cartes</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Validation terrain</div>
+      <div class="kpi-value green">31</div>
+      <div class="kpi-sub">100 % via NB-ADO ✓</div>
     </div>
   </div>
 
   <div class="progress-wrap">
     <div class="progress-header">
       <div class="section-label">Progression corpus</div>
-      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted)">25 / 60 cartes</div>
+      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted)">31 / 60 cartes — 51.7 %</div>
     </div>
     <div class="progress-track">
-      <div class="progress-fill" style="width:41.7%"></div>
-      <div class="progress-target" style="left:81.6%"></div>
+      <div class="progress-fill" style="width:51.7%"></div>
+      <div class="progress-target" style="left:81.25%"></div>
     </div>
     <div class="progress-labels">
       <span>0</span>
@@ -453,34 +220,34 @@
     </div>
   </div>
 
-  <div class="section-label">Critères qualité (score moyen par critère)</div>
+  <div class="section-label">Critères qualité — lecture du run</div>
   <div class="criteria-grid">
     <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--accent)">9.1</div>
-      <div class="criteria-name">Source confirmée</div>
+      <div class="criteria-score" style="color:var(--accent)">2/2</div>
+      <div class="criteria-name">Source confirmée — 100 %</div>
     </div>
     <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--accent)">8.8</div>
+      <div class="criteria-score" style="color:var(--warn)">23/31</div>
       <div class="criteria-name">Edge cases ≥ 2</div>
     </div>
     <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--accent)">8.4</div>
+      <div class="criteria-score" style="color:var(--warn)">24/31</div>
       <div class="criteria-name">Points d'attention</div>
     </div>
     <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--warn)">8.0</div>
-      <div class="criteria-name">Validation squad</div>
+      <div class="criteria-score" style="color:var(--accent)">31/31</div>
+      <div class="criteria-name">Validation terrain NB-ADO</div>
     </div>
     <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--danger)">3.2</div>
-      <div class="criteria-name">Validation terrain</div>
+      <div class="criteria-score" style="color:var(--warn)">10/31</div>
+      <div class="criteria-name">Sans caveat ouvert</div>
     </div>
   </div>
 
   <div class="grid-2">
 
     <div class="card">
-      <div class="card-title">Répartition par domaine</div>
+      <div class="card-title">Couverture par domaine</div>
       <div id="domainList"></div>
     </div>
 
@@ -490,29 +257,36 @@
         <div class="alert-item danger">
           <div class="alert-dot"></div>
           <div>
-            <div class="alert-title">FORM-10 — critique (4/10)</div>
-            <div class="alert-body">Sections manquantes confirmées. Priorité de révision session suivante.</div>
+            <div class="alert-title">7 cartes critiques (score ≤ 4/10)</div>
+            <div class="alert-body">CARR-26, CARR-27, CORE-40, CORE-50, FORM-00, FORM-10, FORM-65 — edge cases et points d'attention manquants.</div>
+          </div>
+        </div>
+        <div class="alert-item danger">
+          <div class="alert-dot"></div>
+          <div>
+            <div class="alert-title">8 cartes sans edge cases</div>
+            <div class="alert-body">CARR-26, CARR-27, CORE-40, CORE-50, FORM-00, FORM-10, FORM-40, FORM-65.</div>
           </div>
         </div>
         <div class="alert-item warn">
           <div class="alert-dot"></div>
           <div>
-            <div class="alert-title">18 cartes sans validation terrain</div>
-            <div class="alert-body">NB-ADO-Interventions non consulté. Prochaine phase de maturité corpus.</div>
+            <div class="alert-title">21 cartes avec caveat ouvert</div>
+            <div class="alert-body">Comportements non confirmés signalés. À traiter en révision batch trimestrielle.</div>
           </div>
         </div>
         <div class="alert-item warn">
           <div class="alert-dot"></div>
           <div>
-            <div class="alert-title">Angles morts ADP + RECR</div>
-            <div class="alert-body">0 carte sur deux domaines P0. Vague 1 en attente (T+3 mois).</div>
+            <div class="alert-title">Angles morts ADP + RECR + PAY</div>
+            <div class="alert-body">0 carte sur trois domaines. Vague 1 prioritaire (T+3 mois).</div>
           </div>
         </div>
         <div class="alert-item info">
           <div class="alert-dot"></div>
           <div>
-            <div class="alert-title">66 articles Notion sans carte Delphi</div>
-            <div class="alert-body">25 haute priorité — gouvernance PS × TW à activer.</div>
+            <div class="alert-title">GLOS + META vides</div>
+            <div class="alert-body">0 carte produite sur ces deux préfixes structurels. À planifier Vague 1.</div>
           </div>
         </div>
       </div>
@@ -521,36 +295,37 @@
   </div>
 
   <div class="card" style="margin-bottom:28px">
+    <div class="card-title">Cartes critiques à traiter en priorité</div>
+    <div class="critical-list" id="criticalList"></div>
+  </div>
+
+  <div class="card" style="margin-bottom:28px">
     <div class="card-title">Plan de vagues</div>
     <div class="waves-wrap">
       <div class="wave-item">
         <div class="wave-label">Vague 1<br>T+3 mois</div>
-        <div>
-          <div class="wave-desc">Angles morts prioritaires + complétion CORE</div>
-        </div>
+        <div><div class="wave-desc">Angles morts + correction critiques + GLOS/META</div></div>
         <div class="wave-domains">
           <span class="badge badge-red">ADP</span>
           <span class="badge badge-red">RECR</span>
+          <span class="badge badge-red">PAY</span>
           <span class="badge badge-amber">CORE</span>
+          <span class="badge badge-gray">GLOS</span>
+          <span class="badge badge-gray">META</span>
         </div>
       </div>
       <div class="wave-item">
         <div class="wave-label">Vague 2<br>T+6 mois</div>
-        <div>
-          <div class="wave-desc">Enrichissement domaines existants</div>
-        </div>
+        <div><div class="wave-desc">Enrichissement domaines existants</div></div>
         <div class="wave-domains">
           <span class="badge badge-amber">CARR</span>
           <span class="badge badge-amber">FORM</span>
           <span class="badge badge-gray">RPT</span>
-          <span class="badge badge-gray">PAY</span>
         </div>
       </div>
       <div class="wave-item">
         <div class="wave-label">Vague 3<br>T+12 mois</div>
-        <div>
-          <div class="wave-desc">Révision batch + INTG avancé</div>
-        </div>
+        <div><div class="wave-desc">Révision batch + INTG avancé + résolution caveats</div></div>
         <div class="wave-domains">
           <span class="badge badge-blue">INTG</span>
           <span class="badge badge-purple">Révision</span>
@@ -560,57 +335,78 @@
   </div>
 
   <div class="card" style="margin-bottom:16px">
-    <div class="card-title">Personas Delphi</div>
+    <div class="card-title">Personas Delphi — corpus complet</div>
     <div id="personaGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;"></div>
   </div>
 
   <div class="update-line">
     <div class="dot-live"></div>
-    <span>Généré depuis delphi_score.py v2 — sources : fichiers Cartes individuels Obsidian</span>
+    <span>delphi_score.py v2 — run du 2026-05-08 10:23 — 31 cartes scorées</span>
   </div>
 
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 const domains = [
-  { prefix: 'DOC',  name: 'Moteur de fusion',     cards: 6, score: 7.8, status: 'ok' },
-  { prefix: 'INTG', name: 'Intégrations',          cards: 5, score: 8.0, status: 'ok' },
-  { prefix: 'FORM', name: 'Formation / Campus',    cards: 6, score: 7.2, status: 'warn' },
-  { prefix: 'CARR', name: 'Carrière / Entretiens', cards: 4, score: 6.8, status: 'warn' },
-  { prefix: 'CORE', name: 'Transverse',            cards: 3, score: 8.1, status: 'ok' },
-  { prefix: 'RPT',  name: 'Reporting',             cards: 1, score: 7.0, status: 'warn' },
-  { prefix: 'PAY',  name: 'Paie',                  cards: 0, score: 0,   status: 'empty' },
-  { prefix: 'ADP',  name: 'ADP / Boarding',        cards: 0, score: 0,   status: 'empty' },
-  { prefix: 'RECR', name: 'Recrutement',           cards: 0, score: 0,   status: 'empty' },
+  { prefix: 'CARR', name: 'Carrière / Entretiens', cards: 7,  cible: 6,  score: 7.4, status: 'ok' },
+  { prefix: 'CORE', name: 'Transverse',            cards: 5,  cible: 5,  score: 6.8, status: 'warn' },
+  { prefix: 'DOC',  name: 'Moteur de fusion',      cards: 6,  cible: 8,  score: 9.5, status: 'ok' },
+  { prefix: 'FORM', name: 'Formation / Campus',    cards: 8,  cible: 6,  score: 6.9, status: 'warn' },
+  { prefix: 'INTG', name: 'Intégrations',          cards: 4,  cible: 3,  score: 8.5, status: 'ok' },
+  { prefix: 'RPT',  name: 'Reporting',             cards: 1,  cible: 3,  score: 9.0, status: 'ok' },
+  { prefix: 'ADP',  name: 'ADP / Boarding',        cards: 0,  cible: 6,  score: 0,   status: 'empty' },
+  { prefix: 'PAY',  name: 'Paie',                  cards: 0,  cible: 3,  score: 0,   status: 'empty' },
+  { prefix: 'RECR', name: 'Recrutement',           cards: 0,  cible: 5,  score: 0,   status: 'empty' },
+  { prefix: 'GLOS', name: 'Glossaire',             cards: 0,  cible: 1,  score: 0,   status: 'empty' },
+  { prefix: 'META', name: 'Architecture référentiel', cards: 0, cible: 3, score: 0, status: 'empty' },
 ];
 
-const maxCards = 6;
 const dl = document.getElementById('domainList');
 domains.forEach(d => {
   const barColor = d.status === 'ok' ? '#1D9E75' : d.status === 'warn' ? '#BA7517' : '#D3D1C7';
   const scoreStr = d.score > 0 ? d.score.toFixed(1) : '—';
   const badgeClass = d.status === 'ok' ? 'badge-green' : d.status === 'warn' ? 'badge-amber' : 'badge-gray';
+  const pct = d.cible > 0 ? Math.min((d.cards / d.cible) * 100, 100) : 0;
   dl.innerHTML += `
     <div class="domain-row">
       <span class="domain-prefix">${d.prefix}</span>
       <span class="domain-name">${d.name}</span>
       <div class="score-bar-wrap">
-        <div class="score-bar" style="width:${(d.cards/maxCards)*100}%;background:${barColor}"></div>
+        <div class="score-bar" style="width:${pct}%;background:${barColor}"></div>
       </div>
-      <span class="domain-count">${d.cards} carte${d.cards>1?'s':''}</span>
+      <span class="domain-count">${d.cards}/${d.cible}</span>
       <span class="badge ${badgeClass}" style="min-width:36px;justify-content:center">${scoreStr}</span>
     </div>`;
 });
 
+const critiques = [
+  { id: 'CARR-26', title: 'Campagnes parallèles & périmètre fantôme', missing: 'edge cases · points d\'attention' },
+  { id: 'CARR-27', title: 'Évaluation compétences entretien',         missing: 'edge cases · points d\'attention' },
+  { id: 'CORE-40', title: 'Identifiants employé & login',             missing: 'edge cases · points d\'attention' },
+  { id: 'CORE-50', title: 'Notifications : architecture',             missing: 'edge cases · points d\'attention' },
+  { id: 'FORM-00', title: 'Vue d\'ensemble Maestro',                  missing: 'edge cases · points d\'attention · 16 caveats' },
+  { id: 'FORM-10', title: 'Proposition de dates sessions',            missing: 'edge cases · points d\'attention' },
+  { id: 'FORM-65', title: 'Questionnaires évaluation LearnerFeedback',missing: 'edge cases · points d\'attention' },
+];
+
+const cl = document.getElementById('criticalList');
+critiques.forEach(c => {
+  cl.innerHTML += `
+    <div class="critical-item">
+      <span class="critical-id" style="color:var(--danger)">${c.id}</span>
+      <span class="critical-title">${c.title}</span>
+      <span class="critical-missing">${c.missing}</span>
+    </div>`;
+});
+
 const personas = [
-  { id: 'PERS-10', role: 'DRH',                    priority: 'P1', version: 'v1 — Avr. 2026', color: 'purple' },
-  { id: 'PERS-20', role: 'Resp. ADP',               priority: 'P0', version: 'v1 — Avr. 2026', color: 'green' },
-  { id: 'PERS-30', role: 'Resp. Paie & ADP',        priority: 'P0/P1', version: 'v2 — Avr. 2026', color: 'green' },
-  { id: 'PERS-40', role: 'Resp. Formation (L&D)',   priority: 'P0', version: 'v2 — Mars 2026', color: 'green' },
-  { id: 'PERS-50', role: 'Resp. RH Généraliste',    priority: 'P1', version: 'v1 — Mars 2026', color: 'amber' },
-  { id: 'PERS-60', role: 'Resp. Recrutement',       priority: 'P1', version: 'v1 — Mars 2026', color: 'amber' },
-  { id: 'PERS-70', role: 'Resp. SIRH',              priority: 'P1', version: 'v1 — Avr. 2026', color: 'blue' },
+  { id: 'PERS-10', role: 'DRH',                  priority: 'P1',    version: 'v1 — Avr. 2026', color: 'purple' },
+  { id: 'PERS-20', role: 'Resp. ADP',             priority: 'P0',    version: 'v1 — Avr. 2026', color: 'green' },
+  { id: 'PERS-30', role: 'Resp. Paie & ADP',      priority: 'P0/P1', version: 'v2 — Avr. 2026', color: 'green' },
+  { id: 'PERS-40', role: 'Resp. Formation (L&D)', priority: 'P0',    version: 'v2 — Mars 2026',  color: 'green' },
+  { id: 'PERS-50', role: 'Resp. RH Généraliste',  priority: 'P1',    version: 'v1 — Mars 2026',  color: 'amber' },
+  { id: 'PERS-60', role: 'Resp. Recrutement',     priority: 'P1',    version: 'v1 — Mars 2026',  color: 'amber' },
+  { id: 'PERS-70', role: 'Resp. SIRH',            priority: 'P1',    version: 'v1 — Avr. 2026',  color: 'blue' },
 ];
 
 const colorMap = {
@@ -627,7 +423,7 @@ personas.forEach(p => {
     <div style="background:${bg};border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;">
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <span style="font-family:'DM Mono',monospace;font-size:11px;color:${fg};font-weight:500">${p.id}</span>
-        <span class="badge" style="background:${bg};color:${fg};border:1px solid ${fg}20">${p.priority}</span>
+        <span class="badge" style="background:${bg};color:${fg};border:1px solid ${fg}30">${p.priority}</span>
       </div>
       <div style="font-size:13px;font-weight:600;color:var(--text)">${p.role}</div>
       <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${p.version}</div>
