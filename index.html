@@ -3,432 +3,728 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delphi — Corpus Dashboard</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Delphi — Tableau de bord corpus</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #F5F3EE;
+    --bg: #F8F7F4;
     --surface: #FFFFFF;
-    --surface2: #EFEFEB;
+    --surface2: #F1EFE8;
     --border: rgba(0,0,0,0.10);
-    --text: #1A1916;
-    --text-muted: #6B6860;
-    --text-faint: #9C9A93;
-    --accent: #1D9E75;
-    --accent-light: #E1F5EE;
-    --warn: #BA7517;
-    --warn-light: #FAEEDA;
-    --danger: #A32D2D;
-    --danger-light: #FCEBEB;
-    --info: #185FA5;
-    --info-light: #E6F1FB;
-    --purple: #534AB7;
-    --purple-light: #EEEDFE;
-    --radius: 10px;
-    --radius-sm: 6px;
+    --border2: rgba(0,0,0,0.18);
+    --text: #1C1C1A;
+    --text2: #5F5E5A;
+    --text3: #888780;
+    --accent: #3C3489;
+    --accent-bg: #EEEDFE;
+    --accent-text: #26215C;
+    --red: #E24B4A;
+    --red-bg: #FCEBEB;
+    --red-text: #501313;
+    --orange: #BA7517;
+    --orange-bg: #FAEEDA;
+    --orange-text: #412402;
+    --yellow: #639922;
+    --yellow-bg: #EAF3DE;
+    --yellow-text: #173404;
+    --green: #0F6E56;
+    --green-bg: #E1F5EE;
+    --green-text: #04342C;
+    --blue: #185FA5;
+    --blue-bg: #E6F1FB;
+    --blue-text: #042C53;
+    --font: 'Georgia', 'Times New Roman', serif;
+    --mono: 'Courier New', monospace;
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #18180F;
-      --surface: #222218;
-      --surface2: #2C2C22;
+      --bg: #1C1C1A;
+      --surface: #2C2C2A;
+      --surface2: #383835;
       --border: rgba(255,255,255,0.10);
-      --text: #F0EEE6;
-      --text-muted: #9C9A8A;
-      --text-faint: #6B6858;
-      --accent: #1D9E75;
-      --accent-light: #04342C;
-      --warn: #EF9F27;
-      --warn-light: #412402;
-      --danger: #E24B4A;
-      --danger-light: #501313;
-      --info: #378ADD;
-      --info-light: #042C53;
-      --purple: #7F77DD;
-      --purple-light: #26215C;
+      --border2: rgba(255,255,255,0.18);
+      --text: #F1EFE8;
+      --text2: #B4B2A9;
+      --text3: #888780;
+      --accent: #AFA9EC;
+      --accent-bg: #26215C;
+      --accent-text: #EEEDFE;
+      --red-bg: #501313;
+      --red-text: #F7C1C1;
+      --orange-bg: #412402;
+      --orange-text: #FAC775;
+      --yellow-bg: #173404;
+      --yellow-text: #C0DD97;
+      --green-bg: #04342C;
+      --green-text: #9FE1CB;
+      --blue-bg: #042C53;
+      --blue-text: #B5D4F4;
     }
   }
-
-  body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-  .header {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 0;
+  }
+  header {
     background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 32px;
+    border-bottom: 1px solid var(--border2);
+    padding: 28px 40px 24px;
     display: flex;
-    align-items: baseline;
-    gap: 12px;
+    align-items: flex-end;
+    justify-content: space-between;
     flex-wrap: wrap;
+    gap: 12px;
   }
-  .header-title { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-  .header-title span { color: var(--accent); }
-  .header-meta { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); margin-left: auto; }
-
-  .badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
-    padding: 3px 8px; border-radius: 4px; letter-spacing: 0.3px;
+  .header-left h1 {
+    font-size: 26px;
+    font-weight: normal;
+    letter-spacing: -0.5px;
+    color: var(--text);
   }
-  .badge-green  { background: var(--accent-light); color: var(--accent); }
-  .badge-amber  { background: var(--warn-light);   color: var(--warn); }
-  .badge-red    { background: var(--danger-light); color: var(--danger); }
-  .badge-blue   { background: var(--info-light);   color: var(--info); }
-  .badge-purple { background: var(--purple-light); color: var(--purple); }
-  .badge-gray   { background: var(--surface2);     color: var(--text-muted); }
-
-  .main { padding: 28px 32px; max-width: 1100px; }
-
-  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
-
-  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
-  .kpi-label { font-size: 11px; color: var(--text-faint); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
-  .kpi-value { font-size: 28px; font-weight: 700; line-height: 1; letter-spacing: -1px; }
-  .kpi-value.green  { color: var(--accent); }
-  .kpi-value.amber  { color: var(--warn); }
-  .kpi-value.red    { color: var(--danger); }
-  .kpi-value.blue   { color: var(--info); }
-  .kpi-value.purple { color: var(--purple); }
-  .kpi-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
-
-  .section-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-
-  .progress-wrap { margin-bottom: 28px; }
-  .progress-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-  .progress-track { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; position: relative; }
-  .progress-fill { height: 100%; border-radius: 4px; background: var(--accent); }
-  .progress-target { position: absolute; top: 0; height: 100%; width: 2px; background: var(--text-faint); }
-  .progress-labels { display: flex; justify-content: space-between; margin-top: 6px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-faint); }
-
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
-
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-  .card-title { font-size: 13px; font-weight: 600; margin-bottom: 16px; color: var(--text); }
-
-  .domain-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
-  .domain-row:last-child { border-bottom: none; }
-  .domain-prefix { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--text-muted); min-width: 44px; }
-  .domain-name { font-size: 13px; flex: 1; }
-  .score-bar-wrap { flex: 1; height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
-  .score-bar { height: 100%; border-radius: 3px; }
-  .domain-count { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-faint); min-width: 32px; text-align: right; }
-
-  .alerts-list { display: flex; flex-direction: column; gap: 10px; }
-  .alert-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
-  .alert-item.danger { background: var(--danger-light); border-color: var(--danger); }
-  .alert-item.warn   { background: var(--warn-light);   border-color: var(--warn); }
-  .alert-item.info   { background: var(--info-light);   border-color: var(--info); }
-  .alert-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-  .danger .alert-dot { background: var(--danger); }
-  .warn   .alert-dot { background: var(--warn); }
-  .info   .alert-dot { background: var(--info); }
-  .alert-title { font-size: 13px; font-weight: 600; }
-  .danger .alert-title { color: var(--danger); }
-  .warn   .alert-title { color: var(--warn); }
-  .info   .alert-title { color: var(--info); }
-  .alert-body { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-
-  .critical-list { display: flex; flex-direction: column; gap: 6px; }
-  .critical-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--surface2); border-radius: var(--radius-sm); }
-  .critical-id { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; min-width: 72px; }
-  .critical-title { font-size: 12px; color: var(--text-muted); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .critical-missing { font-size: 11px; color: var(--danger); font-family: 'DM Mono', monospace; }
-
-  .waves-wrap { display: flex; flex-direction: column; gap: 10px; }
-  .wave-item { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface2); border-radius: var(--radius-sm); }
-  .wave-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-muted); }
-  .wave-desc { font-size: 13px; }
-  .wave-domains { display: flex; flex-wrap: wrap; gap: 4px; }
-
-  .criteria-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 28px; }
-  .criteria-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; text-align: center; }
-  .criteria-score { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
-  .criteria-name { font-size: 11px; color: var(--text-faint); line-height: 1.4; }
-
-  .update-line { display: flex; align-items: center; gap: 8px; padding: 10px 0; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-faint); font-family: 'DM Mono', monospace; }
-  .dot-live { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
+  .header-left h1 span {
+    color: var(--accent);
+    font-style: italic;
+  }
+  .header-left p {
+    font-size: 13px;
+    color: var(--text3);
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+  .header-right {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+  }
+  .kpi {
+    text-align: right;
+  }
+  .kpi-val {
+    font-size: 32px;
+    font-weight: normal;
+    line-height: 1;
+    color: var(--text);
+  }
+  .kpi-val.score { color: var(--orange); }
+  .kpi-val.score.good { color: var(--yellow); }
+  .kpi-val.score.great { color: var(--green); }
+  .kpi-label {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+  main { padding: 32px 40px; max-width: 1100px; margin: 0 auto; }
+  section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text3);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .domains-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .domain-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .domain-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .domain-card.great::before { background: var(--green); }
+  .domain-card.good::before { background: var(--yellow); }
+  .domain-card.ok::before { background: var(--orange); }
+  .domain-card.weak::before { background: var(--red); }
+  .domain-card.empty::before { background: var(--border2); }
+  .domain-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .domain-prefix {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--accent);
+  }
+  .domain-score {
+    font-family: var(--mono);
+    font-size: 20px;
+    color: var(--text);
+  }
+  .domain-score.great { color: var(--green); }
+  .domain-score.good { color: var(--yellow); }
+  .domain-score.ok { color: var(--orange); }
+  .domain-score.weak { color: var(--red); }
+  .domain-score.empty { color: var(--text3); }
+  .domain-name {
+    font-size: 12px;
+    color: var(--text2);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .domain-progress {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .domain-progress-bar {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .great .domain-progress-bar { background: var(--green); }
+  .good .domain-progress-bar { background: var(--yellow); }
+  .ok .domain-progress-bar { background: var(--orange); }
+  .weak .domain-progress-bar { background: var(--red); }
+  .empty .domain-progress-bar { background: var(--border2); }
+  .domain-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text3);
+    font-family: var(--mono);
+  }
+  .cards-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .cards-table thead th {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text3);
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border2);
+    background: var(--surface2);
+  }
+  .cards-table tbody tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .cards-table tbody tr:last-child { border-bottom: none; }
+  .cards-table tbody td {
+    padding: 9px 12px;
+    vertical-align: middle;
+  }
+  .cards-table tbody tr:hover { background: var(--surface2); }
+  .card-id {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .card-title {
+    color: var(--text);
+    font-size: 13px;
+  }
+  .score-pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+  .score-pill.great { background: var(--green-bg); color: var(--green-text); }
+  .score-pill.good { background: var(--yellow-bg); color: var(--yellow-text); }
+  .score-pill.ok { background: var(--orange-bg); color: var(--orange-text); }
+  .score-pill.weak { background: var(--red-bg); color: var(--red-text); }
+  .score-pill.empty { background: var(--surface2); color: var(--text3); }
+  .criteria-dots {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot.ok { background: var(--green); }
+  .dot.warn { background: var(--orange); }
+  .dot.fail { background: var(--red-bg); border: 1px solid var(--border2); }
+  .alert-box {
+    background: var(--red-bg);
+    border: 1px solid rgba(226,75,74,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+  }
+  .alert-box .alert-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--red-text);
+    margin-bottom: 8px;
+  }
+  .alert-box .alert-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .alert-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: var(--text);
+  }
+  .progress-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .progress-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .progress-card h3 {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 12px;
+    font-weight: normal;
+  }
+  .progress-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .progress-item-label {
+    font-family: var(--mono);
+    color: var(--accent);
+    width: 56px;
+    flex-shrink: 0;
+    font-size: 11px;
+  }
+  .progress-item-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-item-bar {
+    height: 100%;
+    border-radius: 3px;
+  }
+  .progress-item-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    white-space: nowrap;
+    width: 60px;
+    text-align: right;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    font-size: 11px;
+    color: var(--text3);
+    font-family: var(--mono);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .caveat-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    white-space: nowrap;
+  }
+  .caveat-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    margin-right: 3px;
+    vertical-align: middle;
+  }
   @media (max-width: 700px) {
-    .grid-2 { grid-template-columns: 1fr; }
-    .main { padding: 20px 16px; }
-    .header { padding: 16px; }
-    .criteria-grid { grid-template-columns: repeat(2, 1fr); }
-    .wave-item { grid-template-columns: 70px 1fr; }
-    .wave-domains { display: none; }
+    header { padding: 20px; }
+    main { padding: 20px; }
+    footer { padding: 16px 20px; }
   }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-title">Delphi <span>·</span> Corpus</div>
-  <div class="header-meta">08 mai 2026 — delphi_score.py v2</div>
-</div>
-
-<div class="main">
-
-  <div class="kpi-row">
+<header>
+  <div class="header-left">
+    <h1>Delphi — <span>corpus quarksUp</span></h1>
+    <p>Tableau de bord qualité · généré le 2026-05-13</p>
+  </div>
+  <div class="header-right">
     <div class="kpi">
-      <div class="kpi-label">Score moyen</div>
-      <div class="kpi-value amber">7.8<span style="font-size:16px;font-weight:400;color:var(--text-muted)">/10</span></div>
-      <div class="kpi-sub">31 cartes scorées</div>
+      <div class="kpi-val">43</div>
+      <div class="kpi-label">cartes scorées</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Cartes actives</div>
-      <div class="kpi-value blue">31</div>
-      <div class="kpi-sub">hors META / GLOS vides</div>
+      <div class="kpi-val score">6.7</div>
+      <div class="kpi-label">score moyen /10</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Objectif 12 mois</div>
-      <div class="kpi-value purple">60</div>
-      <div class="kpi-sub">cible utilité quotidienne</div>
+      <div class="kpi-val">29</div>
+      <div class="kpi-label">caveats ouverts</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Cartes critiques</div>
-      <div class="kpi-value red">7</div>
-      <div class="kpi-sub">score ≤ 4/10</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Caveats ouverts</div>
-      <div class="kpi-value amber">21</div>
-      <div class="kpi-sub">sur 31 cartes</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Validation terrain</div>
-      <div class="kpi-value green">31</div>
-      <div class="kpi-sub">100 % via NB-ADO ✓</div>
+      <div class="kpi-val">5</div>
+      <div class="kpi-label">sans terrain</div>
     </div>
   </div>
+</header>
 
-  <div class="progress-wrap">
-    <div class="progress-header">
-      <div class="section-label">Progression corpus</div>
-      <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text-muted)">31 / 60 cartes — 51.7 %</div>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" style="width:51.7%"></div>
-      <div class="progress-target" style="left:81.25%"></div>
-    </div>
-    <div class="progress-labels">
-      <span>0</span>
-      <span>cible min. (49)</span>
-      <span>cible max. (80)</span>
-    </div>
-  </div>
+<main>
 
-  <div class="section-label">Critères qualité — lecture du run</div>
-  <div class="criteria-grid">
-    <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--accent)">2/2</div>
-      <div class="criteria-name">Source confirmée — 100 %</div>
-    </div>
-    <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--warn)">23/31</div>
-      <div class="criteria-name">Edge cases ≥ 2</div>
-    </div>
-    <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--warn)">24/31</div>
-      <div class="criteria-name">Points d'attention</div>
-    </div>
-    <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--accent)">31/31</div>
-      <div class="criteria-name">Validation terrain NB-ADO</div>
-    </div>
-    <div class="criteria-card">
-      <div class="criteria-score" style="color:var(--warn)">10/31</div>
-      <div class="criteria-name">Sans caveat ouvert</div>
-    </div>
-  </div>
+  <section>
+    <div class="section-title">Couverture par domaine</div>
+    <div class="domains-grid">
 
-  <div class="grid-2">
+      <div class="domain-card great">
+        <div class="domain-header">
+          <span class="domain-prefix">DOC</span>
+          <span class="domain-score great">8.7</span>
+        </div>
+        <div class="domain-name">Moteur de fusion Word/Excel</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:87%"></div></div>
+        <div class="domain-meta"><span>7 cartes</span><span>cible 8–12</span></div>
+      </div>
 
-    <div class="card">
-      <div class="card-title">Couverture par domaine</div>
-      <div id="domainList"></div>
+      <div class="domain-card great">
+        <div class="domain-header">
+          <span class="domain-prefix">INTG</span>
+          <span class="domain-score great">8.0</span>
+        </div>
+        <div class="domain-name">qUpFileMapper, SFTP, API</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:80%"></div></div>
+        <div class="domain-meta"><span>5 cartes</span><span>cible 3–5 ✓</span></div>
+      </div>
+
+      <div class="domain-card good">
+        <div class="domain-header">
+          <span class="domain-prefix">RPT</span>
+          <span class="domain-score good">7.5</span>
+        </div>
+        <div class="domain-name">Reporting et exports</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:75%"></div></div>
+        <div class="domain-meta"><span>2 cartes</span><span>cible 3–5</span></div>
+      </div>
+
+      <div class="domain-card good">
+        <div class="domain-header">
+          <span class="domain-prefix">FORM</span>
+          <span class="domain-score good">6.9</span>
+        </div>
+        <div class="domain-name">Formation, eLearning, Campus</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:69%"></div></div>
+        <div class="domain-meta"><span>8 cartes</span><span>cible 6–10 ✓</span></div>
+      </div>
+
+      <div class="domain-card good">
+        <div class="domain-header">
+          <span class="domain-prefix">CARR</span>
+          <span class="domain-score good">6.8</span>
+        </div>
+        <div class="domain-name">Entretiens, campagnes, carrière</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:68%"></div></div>
+        <div class="domain-meta"><span>8 cartes</span><span>cible 6–10 ✓</span></div>
+      </div>
+
+      <div class="domain-card ok">
+        <div class="domain-header">
+          <span class="domain-prefix">CORE</span>
+          <span class="domain-score ok">6.2</span>
+        </div>
+        <div class="domain-name">Transverse : instances, espaces, profils</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:62%"></div></div>
+        <div class="domain-meta"><span>6 cartes</span><span>cible 5–8 ✓</span></div>
+      </div>
+
+      <div class="domain-card ok">
+        <div class="domain-header">
+          <span class="domain-prefix">RECR</span>
+          <span class="domain-score ok">4.0</span>
+        </div>
+        <div class="domain-name">Recrutement, portail candidat</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:40%"></div></div>
+        <div class="domain-meta"><span>4 cartes</span><span>cible 5–8</span></div>
+      </div>
+
+      <div class="domain-card weak">
+        <div class="domain-header">
+          <span class="domain-prefix">ADP</span>
+          <span class="domain-score weak">3.0</span>
+        </div>
+        <div class="domain-name">Cycle de vie salarié, boarding</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:30%"></div></div>
+        <div class="domain-meta"><span>2 cartes</span><span>cible 6–10</span></div>
+      </div>
+
+      <div class="domain-card weak">
+        <div class="domain-header">
+          <span class="domain-prefix">PAY</span>
+          <span class="domain-score weak">2.0</span>
+        </div>
+        <div class="domain-name">Paie, interfaces paie</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:20%"></div></div>
+        <div class="domain-meta"><span>1 carte</span><span>cible 3–5</span></div>
+      </div>
+
+      <div class="domain-card empty">
+        <div class="domain-header">
+          <span class="domain-prefix">META</span>
+          <span class="domain-score empty">—</span>
+        </div>
+        <div class="domain-name">Architecture référentiel</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:0%"></div></div>
+        <div class="domain-meta"><span>0 cartes</span><span>cible 3–5</span></div>
+      </div>
+
+      <div class="domain-card empty">
+        <div class="domain-header">
+          <span class="domain-prefix">GLOS</span>
+          <span class="domain-score empty">—</span>
+        </div>
+        <div class="domain-name">Glossaire</div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:0%"></div></div>
+        <div class="domain-meta"><span>0 cartes</span><span>cible 1–2</span></div>
+      </div>
+
     </div>
+  </section>
 
-    <div class="card">
-      <div class="card-title">Alertes corpus</div>
-      <div class="alerts-list">
-        <div class="alert-item danger">
-          <div class="alert-dot"></div>
-          <div>
-            <div class="alert-title">7 cartes critiques (score ≤ 4/10)</div>
-            <div class="alert-body">CARR-26, CARR-27, CORE-40, CORE-50, FORM-00, FORM-10, FORM-65 — edge cases et points d'attention manquants.</div>
+  <section>
+    <div class="section-title">Actions prioritaires — 17 cartes sous le seuil acceptable (&lt; 5/10)</div>
+    <div class="alert-box">
+      <div class="alert-title">🔴 Insuffisant (≤ 3/10)</div>
+      <div class="alert-items">
+        <span class="alert-item">ADP-00 · 2/10</span>
+        <span class="alert-item">CARR-00 · 2/10</span>
+        <span class="alert-item">PAY-00 · 2/10</span>
+        <span class="alert-item">CORE-00 · 3/10</span>
+      </div>
+    </div>
+    <div class="alert-box" style="background: var(--orange-bg); border-color: rgba(186,117,23,0.25);">
+      <div class="alert-title" style="color: var(--orange-text);">🟠 Faible (4/10)</div>
+      <div class="alert-items">
+        <span class="alert-item">ADP-10</span>
+        <span class="alert-item">CARR-26</span>
+        <span class="alert-item">CARR-27</span>
+        <span class="alert-item">CORE-40</span>
+        <span class="alert-item">CORE-50</span>
+        <span class="alert-item">DOC-00</span>
+        <span class="alert-item">FORM-00</span>
+        <span class="alert-item">FORM-10</span>
+        <span class="alert-item">FORM-65</span>
+        <span class="alert-item">RECR-00</span>
+        <span class="alert-item">RECR-10</span>
+        <span class="alert-item">RECR-20</span>
+        <span class="alert-item">RECR-30</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">Détail par carte — critères qualité</div>
+    <table class="cards-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Score</th>
+          <th title="Source · Edge cases · Points attention · Terrain · Caveats">Critères</th>
+          <th>Caveats</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="card-id">ADP-00</td><td class="card-title">Vue d'ensemble du domaine ADP</td><td><span class="score-pill weak">2/10</span></td><td><div class="criteria-dots"><div class="dot ok" title="Source ✓"></div><div class="dot fail" title="Edge cases ✗"></div><div class="dot fail" title="Points attention ✗"></div><div class="dot fail" title="Terrain ✗"></div><div class="dot fail" title="Caveats ✗"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">ADP-10</td><td class="card-title">Flux de données embauche → boarding</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok" title="Source ✓"></div><div class="dot fail" title="Edge cases ✗"></div><div class="dot fail" title="Points attention ✗"></div><div class="dot ok" title="Terrain ✓"></div><div class="dot fail" title="Caveats ✗"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
+        <tr><td class="card-id">CARR-00</td><td class="card-title">Vue d'ensemble du domaine Carrière</td><td><span class="score-pill weak">2/10</span></td><td><div class="criteria-dots"><div class="dot ok" title="Source ✓"></div><div class="dot fail" title="Edge cases ✗"></div><div class="dot fail" title="Points attention ✗"></div><div class="dot fail" title="Terrain ✗"></div><div class="dot fail" title="Caveats ✗"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">CARR-10</td><td class="card-title">Référentiels de compétences : Référentiel Connaissances et REC</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn" title="1 caveat ouvert"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">CARR-20</td><td class="card-title">Module Carrière : campagne d'entretien</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail" title="Caveats ✗"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
+        <tr><td class="card-id">CARR-25</td><td class="card-title">Génération automatique de périmètre par date anniversaire</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail" title="Caveats ✗"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">CARR-26</td><td class="card-title">Campagnes parallèles : unicité collaborateur et périmètre fantôme</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">CARR-27</td><td class="card-title">Évaluation des compétences et plan d'actions dans l'entretien</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">CARR-30</td><td class="card-title">Module Questionnaire (formulaire d'entretien)</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">CARR-40</td><td class="card-title">Module Carrière : gestion des missions</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">CORE-00</td><td class="card-title">Vue d'ensemble du domaine transverse</td><td><span class="score-pill weak">3/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">CORE-10</td><td class="card-title">Architecture organisationnelle et types d'espaces</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">CORE-20</td><td class="card-title">Profils, droits et groupes de profils</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
+        <tr><td class="card-id">CORE-30</td><td class="card-title">Les trois types de référentiels quarksUp</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">CORE-40</td><td class="card-title">Identifiants employé et paramètres de création/login</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>5</td></tr>
+        <tr><td class="card-id">CORE-50</td><td class="card-title">Notifications : architecture et paramétrage</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>5</td></tr>
+        <tr><td class="card-id">DOC-00</td><td class="card-title">Vue d'ensemble du moteur de fusion</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">DOC-10</td><td class="card-title">Documents de fusion : architecture et principes généraux</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">DOC-20</td><td class="card-title">Fusion : périmètres et déclenchement</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">DOC-30</td><td class="card-title">Fusion Word : syntaxe avancée</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">DOC-40</td><td class="card-title">Fusion Excel : marqueurs et sections</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">DOC-50</td><td class="card-title">Fusion : champs customs</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">DOC-60</td><td class="card-title">Fusion : numérotation et SET_NUM_ARTICLE</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">FORM-00</td><td class="card-title">Vue d'ensemble du périmètre Maestro</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">FORM-10</td><td class="card-title">Proposition de dates et planification</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">FORM-20</td><td class="card-title">Filtrage domaine de compétences</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">FORM-30</td><td class="card-title">Diplômes, habilitations et sessions</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">FORM-40</td><td class="card-title">Dépenses salaires et calcul présences</td><td><span class="score-pill ok" style="background:var(--blue-bg);color:var(--blue-text)">6/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">FORM-50</td><td class="card-title">Financement multi-dispositifs dans le plan de formation</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">FORM-60</td><td class="card-title">Requêteur formation : société de facturation et changement d'entité</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">FORM-65</td><td class="card-title">Questionnaires d'évaluation : cycle de vie et ##LearnerFeedback##</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">INTG-00</td><td class="card-title">Vue d'ensemble du domaine Intégration</td><td><span class="score-pill ok" style="background:var(--blue-bg);color:var(--blue-text)">6/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">INTG-10</td><td class="card-title">qUpFileMapper : outil de mapping et génération de fichiers</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>10</td></tr>
+        <tr><td class="card-id">INTG-20</td><td class="card-title">Interfaces automatiques : flux entrant et sortant via SFTP</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">INTG-30</td><td class="card-title">API quarksUp : périmètre, types d'accès et mise en œuvre</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">INTG-31</td><td class="card-title">API quarksUp : versioning v2/v3 (Photon) et architecture des endpoints</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
+        <tr><td class="card-id">PAY-00</td><td class="card-title">Vue d'ensemble du domaine Paie</td><td><span class="score-pill weak">2/10</span></td><td><div class="criteria-dots"><div class="dot fail"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">RECR-00</td><td class="card-title">Vue d'ensemble du domaine Recrutement</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>4</td></tr>
+        <tr><td class="card-id">RECR-10</td><td class="card-title">Offre de recrutement : cycle de vie et comportements clés</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>5</td></tr>
+        <tr><td class="card-id">RECR-20</td><td class="card-title">CVthèque et gestion des candidatures</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>8</td></tr>
+        <tr><td class="card-id">RECR-30</td><td class="card-title">Portail candidat et site carrière</td><td><span class="score-pill weak">4/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>5</td></tr>
+        <tr><td class="card-id">RPT-00</td><td class="card-title">Vue d'ensemble du domaine Reporting et exports</td><td><span class="score-pill ok" style="background:var(--blue-bg);color:var(--blue-text)">6/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">RPT-10</td><td class="card-title">Reporting & exports de données : accompagner les clients</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="section-title">Couverture cible par domaine</div>
+    <div class="progress-section">
+      <div class="progress-card">
+        <h3>Cartes produites vs cible minimale</h3>
+        <div class="progress-item">
+          <span class="progress-item-label">DOC</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:87.5%; background:var(--green)"></div></div>
+          <span class="progress-item-meta">7 / 8</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">INTG</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--green)"></div></div>
+          <span class="progress-item-meta">5 / 3 ✓</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">CARR</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--green)"></div></div>
+          <span class="progress-item-meta">8 / 6 ✓</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">FORM</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--green)"></div></div>
+          <span class="progress-item-meta">8 / 6 ✓</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">CORE</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--yellow)"></div></div>
+          <span class="progress-item-meta">6 / 5 ✓</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">RPT</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:66%; background:var(--orange)"></div></div>
+          <span class="progress-item-meta">2 / 3</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">RECR</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:80%; background:var(--orange)"></div></div>
+          <span class="progress-item-meta">4 / 5</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">PAY</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:33%; background:var(--red)"></div></div>
+          <span class="progress-item-meta">1 / 3</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">ADP</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:33%; background:var(--red)"></div></div>
+          <span class="progress-item-meta">2 / 6</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">META</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:0%; background:var(--red)"></div></div>
+          <span class="progress-item-meta">0 / 3</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label">GLOS</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:0%; background:var(--red)"></div></div>
+          <span class="progress-item-meta">0 / 1</span>
+        </div>
+      </div>
+
+      <div class="progress-card">
+        <h3>Déficits de qualité par critère</h3>
+        <div class="progress-item">
+          <span class="progress-item-label" style="width:120px;font-size:11px">Edge cases</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--red)"></div></div>
+          <span class="progress-item-meta">20 cartes</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label" style="width:120px;font-size:11px">Pts attention</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:97%; background:var(--red)"></div></div>
+          <span class="progress-item-meta">19 cartes</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label" style="width:120px;font-size:11px">Caveats ouverts</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:72%; background:var(--orange)"></div></div>
+          <span class="progress-item-meta">29 cartes</span>
+        </div>
+        <div class="progress-item">
+          <span class="progress-item-label" style="width:120px;font-size:11px">Sans terrain</span>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:12%; background:var(--orange)"></div></div>
+          <span class="progress-item-meta">5 cartes</span>
+        </div>
+        <div style="margin-top:20px; padding-top:16px; border-top: 1px solid var(--border);">
+          <h3 style="margin-bottom:12px">Légende critères</h3>
+          <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; color:var(--text2);">
+            <div style="display:flex;align-items:center;gap:8px"><div class="dot ok"></div> critère satisfait</div>
+            <div style="display:flex;align-items:center;gap:8px"><div class="dot warn"></div> 1 caveat résiduel</div>
+            <div style="display:flex;align-items:center;gap:8px"><div class="dot fail"></div> critère manquant</div>
+          </div>
+          <div style="margin-top:14px; font-size:11px; color:var(--text3); font-family:var(--mono)">
+            Ordre des 5 points : Source · Edge cases · Points attention · Terrain · Caveats
           </div>
         </div>
-        <div class="alert-item danger">
-          <div class="alert-dot"></div>
-          <div>
-            <div class="alert-title">8 cartes sans edge cases</div>
-            <div class="alert-body">CARR-26, CARR-27, CORE-40, CORE-50, FORM-00, FORM-10, FORM-40, FORM-65.</div>
-          </div>
-        </div>
-        <div class="alert-item warn">
-          <div class="alert-dot"></div>
-          <div>
-            <div class="alert-title">21 cartes avec caveat ouvert</div>
-            <div class="alert-body">Comportements non confirmés signalés. À traiter en révision batch trimestrielle.</div>
-          </div>
-        </div>
-        <div class="alert-item warn">
-          <div class="alert-dot"></div>
-          <div>
-            <div class="alert-title">Angles morts ADP + RECR + PAY</div>
-            <div class="alert-body">0 carte sur trois domaines. Vague 1 prioritaire (T+3 mois).</div>
-          </div>
-        </div>
-        <div class="alert-item info">
-          <div class="alert-dot"></div>
-          <div>
-            <div class="alert-title">GLOS + META vides</div>
-            <div class="alert-body">0 carte produite sur ces deux préfixes structurels. À planifier Vague 1.</div>
-          </div>
-        </div>
       </div>
     </div>
+  </section>
 
-  </div>
+</main>
 
-  <div class="card" style="margin-bottom:28px">
-    <div class="card-title">Cartes critiques à traiter en priorité</div>
-    <div class="critical-list" id="criticalList"></div>
-  </div>
+<footer>
+  <span>Delphi — Oracle quarksUp · Product Specialist</span>
+  <span>43 cartes · score moyen 6.7/10 · 29 caveats ouverts · généré 2026-05-13</span>
+</footer>
 
-  <div class="card" style="margin-bottom:28px">
-    <div class="card-title">Plan de vagues</div>
-    <div class="waves-wrap">
-      <div class="wave-item">
-        <div class="wave-label">Vague 1<br>T+3 mois</div>
-        <div><div class="wave-desc">Angles morts + correction critiques + GLOS/META</div></div>
-        <div class="wave-domains">
-          <span class="badge badge-red">ADP</span>
-          <span class="badge badge-red">RECR</span>
-          <span class="badge badge-red">PAY</span>
-          <span class="badge badge-amber">CORE</span>
-          <span class="badge badge-gray">GLOS</span>
-          <span class="badge badge-gray">META</span>
-        </div>
-      </div>
-      <div class="wave-item">
-        <div class="wave-label">Vague 2<br>T+6 mois</div>
-        <div><div class="wave-desc">Enrichissement domaines existants</div></div>
-        <div class="wave-domains">
-          <span class="badge badge-amber">CARR</span>
-          <span class="badge badge-amber">FORM</span>
-          <span class="badge badge-gray">RPT</span>
-        </div>
-      </div>
-      <div class="wave-item">
-        <div class="wave-label">Vague 3<br>T+12 mois</div>
-        <div><div class="wave-desc">Révision batch + INTG avancé + résolution caveats</div></div>
-        <div class="wave-domains">
-          <span class="badge badge-blue">INTG</span>
-          <span class="badge badge-purple">Révision</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:16px">
-    <div class="card-title">Personas Delphi — corpus complet</div>
-    <div id="personaGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;"></div>
-  </div>
-
-  <div class="update-line">
-    <div class="dot-live"></div>
-    <span>delphi_score.py v2 — run du 2026-05-08 10:23 — 31 cartes scorées</span>
-  </div>
-
-</div>
-
-<script>
-const domains = [
-  { prefix: 'CARR', name: 'Carrière / Entretiens', cards: 7,  cible: 6,  score: 7.4, status: 'ok' },
-  { prefix: 'CORE', name: 'Transverse',            cards: 5,  cible: 5,  score: 6.8, status: 'warn' },
-  { prefix: 'DOC',  name: 'Moteur de fusion',      cards: 6,  cible: 8,  score: 9.5, status: 'ok' },
-  { prefix: 'FORM', name: 'Formation / Campus',    cards: 8,  cible: 6,  score: 6.9, status: 'warn' },
-  { prefix: 'INTG', name: 'Intégrations',          cards: 4,  cible: 3,  score: 8.5, status: 'ok' },
-  { prefix: 'RPT',  name: 'Reporting',             cards: 1,  cible: 3,  score: 9.0, status: 'ok' },
-  { prefix: 'ADP',  name: 'ADP / Boarding',        cards: 0,  cible: 6,  score: 0,   status: 'empty' },
-  { prefix: 'PAY',  name: 'Paie',                  cards: 0,  cible: 3,  score: 0,   status: 'empty' },
-  { prefix: 'RECR', name: 'Recrutement',           cards: 0,  cible: 5,  score: 0,   status: 'empty' },
-  { prefix: 'GLOS', name: 'Glossaire',             cards: 0,  cible: 1,  score: 0,   status: 'empty' },
-  { prefix: 'META', name: 'Architecture référentiel', cards: 0, cible: 3, score: 0, status: 'empty' },
-];
-
-const dl = document.getElementById('domainList');
-domains.forEach(d => {
-  const barColor = d.status === 'ok' ? '#1D9E75' : d.status === 'warn' ? '#BA7517' : '#D3D1C7';
-  const scoreStr = d.score > 0 ? d.score.toFixed(1) : '—';
-  const badgeClass = d.status === 'ok' ? 'badge-green' : d.status === 'warn' ? 'badge-amber' : 'badge-gray';
-  const pct = d.cible > 0 ? Math.min((d.cards / d.cible) * 100, 100) : 0;
-  dl.innerHTML += `
-    <div class="domain-row">
-      <span class="domain-prefix">${d.prefix}</span>
-      <span class="domain-name">${d.name}</span>
-      <div class="score-bar-wrap">
-        <div class="score-bar" style="width:${pct}%;background:${barColor}"></div>
-      </div>
-      <span class="domain-count">${d.cards}/${d.cible}</span>
-      <span class="badge ${badgeClass}" style="min-width:36px;justify-content:center">${scoreStr}</span>
-    </div>`;
-});
-
-const critiques = [
-  { id: 'CARR-26', title: 'Campagnes parallèles & périmètre fantôme', missing: 'edge cases · points d\'attention' },
-  { id: 'CARR-27', title: 'Évaluation compétences entretien',         missing: 'edge cases · points d\'attention' },
-  { id: 'CORE-40', title: 'Identifiants employé & login',             missing: 'edge cases · points d\'attention' },
-  { id: 'CORE-50', title: 'Notifications : architecture',             missing: 'edge cases · points d\'attention' },
-  { id: 'FORM-00', title: 'Vue d\'ensemble Maestro',                  missing: 'edge cases · points d\'attention · 16 caveats' },
-  { id: 'FORM-10', title: 'Proposition de dates sessions',            missing: 'edge cases · points d\'attention' },
-  { id: 'FORM-65', title: 'Questionnaires évaluation LearnerFeedback',missing: 'edge cases · points d\'attention' },
-];
-
-const cl = document.getElementById('criticalList');
-critiques.forEach(c => {
-  cl.innerHTML += `
-    <div class="critical-item">
-      <span class="critical-id" style="color:var(--danger)">${c.id}</span>
-      <span class="critical-title">${c.title}</span>
-      <span class="critical-missing">${c.missing}</span>
-    </div>`;
-});
-
-const personas = [
-  { id: 'PERS-10', role: 'DRH',                  priority: 'P1',    version: 'v1 — Avr. 2026', color: 'purple' },
-  { id: 'PERS-20', role: 'Resp. ADP',             priority: 'P0',    version: 'v1 — Avr. 2026', color: 'green' },
-  { id: 'PERS-30', role: 'Resp. Paie & ADP',      priority: 'P0/P1', version: 'v2 — Avr. 2026', color: 'green' },
-  { id: 'PERS-40', role: 'Resp. Formation (L&D)', priority: 'P0',    version: 'v2 — Mars 2026',  color: 'green' },
-  { id: 'PERS-50', role: 'Resp. RH Généraliste',  priority: 'P1',    version: 'v1 — Mars 2026',  color: 'amber' },
-  { id: 'PERS-60', role: 'Resp. Recrutement',     priority: 'P1',    version: 'v1 — Mars 2026',  color: 'amber' },
-  { id: 'PERS-70', role: 'Resp. SIRH',            priority: 'P1',    version: 'v1 — Avr. 2026',  color: 'blue' },
-];
-
-const colorMap = {
-  purple: ['var(--purple-light)', 'var(--purple)'],
-  green:  ['var(--accent-light)', 'var(--accent)'],
-  amber:  ['var(--warn-light)',   'var(--warn)'],
-  blue:   ['var(--info-light)',   'var(--info)'],
-};
-
-const pg = document.getElementById('personaGrid');
-personas.forEach(p => {
-  const [bg, fg] = colorMap[p.color];
-  pg.innerHTML += `
-    <div style="background:${bg};border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;">
-        <span style="font-family:'DM Mono',monospace;font-size:11px;color:${fg};font-weight:500">${p.id}</span>
-        <span class="badge" style="background:${bg};color:${fg};border:1px solid ${fg}30">${p.priority}</span>
-      </div>
-      <div style="font-size:13px;font-weight:600;color:var(--text)">${p.role}</div>
-      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">${p.version}</div>
-    </div>`;
-});
-</script>
 </body>
 </html>
