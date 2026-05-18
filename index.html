@@ -136,6 +136,17 @@
   footer { border-top: 1px solid var(--border); padding: 20px 40px; font-size: 11px; color: var(--text3); font-family: var(--mono); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   .caveat-count { font-family: var(--mono); font-size: 11px; color: var(--text3); white-space: nowrap; }
   .caveat-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-right: 3px; vertical-align: middle; }
+  .activity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 0; }
+  .activity-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+  .activity-card.highlight { border-color: var(--accent); background: var(--accent-bg); }
+  .activity-val { font-size: 36px; font-weight: normal; line-height: 1; color: var(--text); }
+  .activity-val.new { color: var(--green); }
+  .activity-val.updated { color: var(--blue); }
+  .activity-val.draft { color: var(--text3); }
+  .activity-label { font-size: 11px; color: var(--text3); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+  .activity-delta { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-top: 6px; }
+  .activity-delta.up { color: var(--green); }
+  .activity-delta.neutral { color: var(--text3); }
   @media (max-width: 700px) { header { padding: 20px; } main { padding: 20px; } footer { padding: 16px 20px; } }
 
 </style>
@@ -145,11 +156,11 @@
 <header>
   <div class="header-left">
     <h1>Delphi — <span>corpus quarksUp</span></h1>
-    <p>Tableau de bord qualité · généré le 2026-05-15</p>
+    <p>Tableau de bord qualité · généré le 2026-05-18</p>
   </div>
   <div class="header-right">
     <div class="kpi">
-      <div class="kpi-val">46</div>
+      <div class="kpi-val">48</div>
       <div class="kpi-label">cartes scorées</div>
     </div>
     <div class="kpi">
@@ -157,7 +168,7 @@
       <div class="kpi-label">score moyen /10</div>
     </div>
     <div class="kpi">
-      <div class="kpi-val">39</div>
+      <div class="kpi-val">41</div>
       <div class="kpi-label">caveats ouverts</div>
     </div>
     <div class="kpi">
@@ -168,6 +179,32 @@
 </header>
 
 <main>
+
+  <section>
+    <div class="section-title">Activité corpus — 7 derniers jours</div>
+    <div class="activity-grid">
+      <div class="activity-card highlight">
+        <div class="activity-val new">50</div>
+        <div class="activity-label">nouvelles cartes</div>
+        <div class="activity-delta neutral">premier snapshot</div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-val updated">0</div>
+        <div class="activity-label">cartes mises à jour</div>
+        <div class="activity-delta neutral">depuis 7 jours</div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-val">50</div>
+        <div class="activity-label">cartes publiées</div>
+        <div class="activity-delta neutral">corpus diffusé</div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-val draft">2</div>
+        <div class="activity-label">brouillons</div>
+        <div class="activity-delta neutral">à venir prochainement</div>
+      </div>
+    </div>
+  </section>
 
   <section>
     <div class="section-title">Couverture cible par domaine</div>
@@ -187,12 +224,12 @@
         <div class="progress-item">
           <span class="progress-item-label">INTG</span>
           <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--green)"></div></div>
-          <span class="progress-item-meta">5 / 3 ✓</span>
+          <span class="progress-item-meta">6 / 3 ✓</span>
         </div>
         <div class="progress-item">
           <span class="progress-item-label">CARR</span>
           <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:100%; background:var(--green)"></div></div>
-          <span class="progress-item-meta">8 / 6 ✓</span>
+          <span class="progress-item-meta">9 / 6 ✓</span>
         </div>
         <div class="progress-item">
           <span class="progress-item-label">FORM</span>
@@ -235,18 +272,18 @@
         <h3>Déficits de qualité par critère</h3>
         <div class="progress-item">
           <span class="progress-item-label" style="width:120px;font-size:11px">Edge cases</span>
-          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:11%; background:var(--yellow)"></div></div>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:10%; background:var(--yellow)"></div></div>
           <span class="progress-item-meta">5 cartes</span>
         </div>
         <div class="progress-item">
           <span class="progress-item-label" style="width:120px;font-size:11px">Pts attention</span>
-          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:7%; background:var(--yellow)"></div></div>
+          <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:6%; background:var(--yellow)"></div></div>
           <span class="progress-item-meta">3 cartes</span>
         </div>
         <div class="progress-item">
           <span class="progress-item-label" style="width:120px;font-size:11px">Caveats ouverts</span>
           <div class="progress-item-bar-wrap"><div class="progress-item-bar" style="width:85%; background:var(--red)"></div></div>
-          <span class="progress-item-meta">39 cartes</span>
+          <span class="progress-item-meta">41 cartes</span>
         </div>
         <div class="progress-item">
           <span class="progress-item-label" style="width:120px;font-size:11px">Sans terrain</span>
@@ -315,11 +352,11 @@
       <div class="domain-card good">
         <div class="domain-header">
           <span class="domain-prefix">INTG</span>
-          <span class="domain-score good">8.4</span>
+          <span class="domain-score good">8.3</span>
         </div>
         <div class="domain-name">qUpFileMapper, SFTP, API</div>
-        <div class="domain-progress"><div class="domain-progress-bar" style="width:84%"></div></div>
-        <div class="domain-meta"><span>5 cartes</span><span>cible 3–5 ✓</span></div>
+        <div class="domain-progress"><div class="domain-progress-bar" style="width:83%"></div></div>
+        <div class="domain-meta"><span>6 cartes</span><span>cible 3–5 ✓</span></div>
       </div>
 
       <div class="domain-card good">
@@ -329,7 +366,7 @@
         </div>
         <div class="domain-name">Entretiens, campagnes, carrière</div>
         <div class="domain-progress"><div class="domain-progress-bar" style="width:81%"></div></div>
-        <div class="domain-meta"><span>8 cartes</span><span>cible 6–10 ✓</span></div>
+        <div class="domain-meta"><span>9 cartes</span><span>cible 6–10 ✓</span></div>
       </div>
 
       <div class="domain-card good">
@@ -411,8 +448,9 @@
         <tr><td class="card-id">ADP-10</td><td class="card-title">Flux de données embauche → boarding : sources, lecture et limites de s…</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
         <tr><td class="card-id">ADP-20</td><td class="card-title">Visites médicales : cycle de suivi, workflow et planification</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>6</td></tr>
         <tr><td class="card-id">ADP-30</td><td class="card-title">Gestion des absences et congés : soldes, calcul et exports paie</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>4</td></tr>
-        <tr><td class="card-id">CARR-00</td><td class="card-title">Vue d'ensemble du domaine Carrière : entretiens, campagnes, compétence…</td><td><span class="score-pill ok">6/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>6</td></tr>
+        <tr><td class="card-id">CARR-00</td><td class="card-title">Vue d'ensemble du domaine Carrière : entretiens, campagnes, compétence…</td><td><span class="score-pill ok">6/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot fail"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>7</td></tr>
         <tr><td class="card-id">CARR-10</td><td class="card-title">Référentiels de compétences : Référentiel Connaissances et REC</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
+        <tr><td class="card-id">CARR-15</td><td class="card-title">Mise à jour du REC : procédure par imports ETL</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>4</td></tr>
         <tr><td class="card-id">CARR-20</td><td class="card-title">Module Carrière : campagne d'entretien</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
         <tr><td class="card-id">CARR-25</td><td class="card-title">Génération automatique de périmètre par date anniversaire (Campagnes d…</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
         <tr><td class="card-id">CARR-26</td><td class="card-title">Campagnes d'entretien parallèles : unicité collaborateur et technique …</td><td><span class="score-pill good">7/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot warn"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
@@ -420,7 +458,7 @@
         <tr><td class="card-id">CARR-30</td><td class="card-title">Module Questionnaire (formulaire d'entretien)</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
         <tr><td class="card-id">CARR-40</td><td class="card-title">Module Carrière : gestion des missions</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
         <tr><td class="card-id">CORE-00</td><td class="card-title">Vue d'ensemble du domaine transverse : instances, espaces, profils, ré…</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>5</td></tr>
-        <tr><td class="card-id">CORE-10</td><td class="card-title">Architecture organisationnelle et types d'espaces quarksUp</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>5</td></tr>
+        <tr><td class="card-id">CORE-10</td><td class="card-title">Architecture organisationnelle et types d'espaces quarksUp</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>6</td></tr>
         <tr><td class="card-id">CORE-20</td><td class="card-title">Profils, droits et groupes de profils</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>6</td></tr>
         <tr><td class="card-id">CORE-30</td><td class="card-title">Les trois types de référentiels quarksUp</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
         <tr><td class="card-id">CORE-40</td><td class="card-title">Identifiants employé et paramètres de création de login</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>7</td></tr>
@@ -432,7 +470,7 @@
         <tr><td class="card-id">DOC-40</td><td class="card-title">Documents de fusion Excel : marqueurs et sections</td><td><span class="score-pill great">9/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot warn"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>1</td></tr>
         <tr><td class="card-id">DOC-50</td><td class="card-title">Champs de fusion pour les champs customs</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
         <tr><td class="card-id">DOC-60</td><td class="card-title">Numérotation automatique d'articles dans les modèles Word (SET NumArti…</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
-        <tr><td class="card-id">FORM-00</td><td class="card-title">Vue d'ensemble du périmètre Maestro : Formation, eLearning, Campus</td><td><span class="score-pill good">7/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot warn"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>14</td></tr>
+        <tr><td class="card-id">FORM-00</td><td class="card-title">Vue d'ensemble du périmètre Maestro : Formation, eLearning, Campus</td><td><span class="score-pill good">7/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot warn"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>15</td></tr>
         <tr><td class="card-id">FORM-10</td><td class="card-title">Proposition de dates : planification collaborative des sessions de for…</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>7</td></tr>
         <tr><td class="card-id">FORM-20</td><td class="card-title">Filtrage par domaine de compétences  -  Initiateur de cours</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
         <tr><td class="card-id">FORM-30</td><td class="card-title">Diplômes et habilitations sur les sessions de formation</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
@@ -441,9 +479,10 @@
         <tr><td class="card-id">FORM-60</td><td class="card-title">Requêteur formation : société de facturation et changement d'entité en…</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
         <tr><td class="card-id">FORM-65</td><td class="card-title">Questionnaires d'évaluation de formation : configuration, cycle de vie…</td><td><span class="score-pill good">7/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot warn"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
         <tr><td class="card-id">FORM-70</td><td class="card-title">causes de blocage et diagnostic</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
-        <tr><td class="card-id">INTG-00</td><td class="card-title">Vue d'ensemble du domaine Intégration</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>3</td></tr>
+        <tr><td class="card-id">INTG-00</td><td class="card-title">Vue d'ensemble du domaine Intégration</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>4</td></tr>
         <tr><td class="card-id">INTG-10</td><td class="card-title">qUpFileMapper : outil de mapping et génération de fichiers d'import/ex…</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>9</td></tr>
         <tr><td class="card-id">INTG-20</td><td class="card-title">Interfaces automatiques : flux entrant et sortant via SFTP</td><td><span class="score-pill great">10/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
+        <tr><td class="card-id">INTG-25</td><td class="card-title">Interface e2Time : mapping collaborateurs et règles d'écrasement</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>7</td></tr>
         <tr><td class="card-id">INTG-30</td><td class="card-title">API quarksUp : périmètre, types d'accès et mise en œuvre</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
         <tr><td class="card-id">INTG-31</td><td class="card-title">API quarksUp : versioning v2 / v3 (Photon) et architecture des endpoin…</td><td><span class="score-pill good">8/10</span></td><td><div class="criteria-dots"><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot ok"></div><div class="dot fail"></div></div></td><td class="caveat-count"><span class="caveat-dot"></span>2</td></tr>
         <tr><td class="card-id">PAY-00</td><td class="card-title">PAY-00_vue-ensemble-domaine-paie</td><td><span class="score-pill weak">2/10</span></td><td><div class="criteria-dots"><div class="dot fail"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot fail"></div><div class="dot ok"></div></div></td><td class="caveat-count" style="color:var(--text3)">0</td></tr>
@@ -461,7 +500,7 @@
 
 <footer>
   <span>Delphi — Oracle quarksUp · Product Specialist</span>
-  <span>Product Specialist · 50 cartes · score moyen 7.9/10 · 39 caveats ouverts · généré 2026-05-15</span>
+  <span>Product Specialist · 52 cartes · score moyen 7.9/10 · 41 caveats ouverts · généré 2026-05-18</span>
 </footer>
 
 </body>
